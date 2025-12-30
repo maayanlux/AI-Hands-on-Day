@@ -1,0 +1,30 @@
+[
+    {
+        "ID": "1",
+        "Name": "Adjustable Dumbbell",
+        "Category": "Strength",
+        "Price": 59.99,
+        "Description": "A compact, adjustable weight for targeted muscle workouts."
+    },
+    {
+        "ID": "2",
+        "Name": "Yoga Mat",
+        "Category": "Flexibility",
+        "Price": 25.0,
+        "Description": "Non-slip mat designed for yoga, Pilates, and other exercises."
+    },
+    {
+        "ID": "3",
+        "Name": "Treadmill",
+        "Category": "Cardio",
+        "Price": 499.0,
+        "Description": "A sturdy treadmill with adjustable speed and incline settings."
+    },
+    {
+        "ID": "4",
+        "Name": "Resistance Bands",
+        "Category": "Strength",
+        "Price": 15.0,
+        "Description": "Set of colorful bands for light to moderate resistance workouts."
+    }
+]

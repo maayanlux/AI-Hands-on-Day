@@ -1,0 +1,221 @@
+{
+    "definition": {
+        "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+        "contentVersion": "1.0.0.0",
+        "actions": {
+            "Create_Run": {
+                "type": "ApiConnection",
+                "inputs": {
+                    "host": {
+                        "connection": {
+                            "referenceName": "azureagentservice"
+                        }
+                    },
+                    "method": "post",
+                    "body": {
+                        "assistant_id": "asst_h4BWgWVSblgy3hFF6m7xD6eH"
+                    },
+                    "path": "/threads/@{encodeURIComponent(variables('thread_id'))}/runs",
+                    "queries": {
+                        "api-version": "2025-05-01"
+                    }
+                },
+                "runAfter": {
+                    "thread_id": [
+                        "SUCCEEDED"
+                    ]
+                }
+            },
+            "List_Messages": {
+                "type": "ApiConnection",
+                "inputs": {
+                    "host": {
+                        "connection": {
+                            "referenceName": "azureagentservice"
+                        }
+                    },
+                    "method": "get",
+                    "path": "/threads/@{encodeURIComponent(variables('thread_id'))}/messages",
+                    "queries": {
+                        "api-version": "2025-05-01"
+                    }
+                },
+                "runAfter": {
+                    "Get_Run": [
+                        "SUCCEEDED"
+                    ]
+                }
+            },
+            "Compose": {
+                "type": "Compose",
+                "inputs": "@body('List_Messages')['data'][0]['content'][0]['text']['value']",
+                "runAfter": {
+                    "List_Messages": [
+                        "SUCCEEDED"
+                    ]
+                }
+            },
+            "runStatus": {
+                "type": "InitializeVariable",
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "status",
+                            "type": "string",
+                            "value": "in_progress"
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "Create_Run": [
+                        "SUCCEEDED"
+                    ]
+                }
+            },
+            "Until": {
+                "type": "Until",
+                "expression": "@equals(variables('status'), 'completed')",
+                "limit": {
+                    "count": 60,
+                    "timeout": "PT5M"
+                },
+                "actions": {
+                    "Set_variable-runStatus_": {
+                        "type": "SetVariable",
+                        "inputs": {
+                            "name": "status",
+                            "value": "@body('GET-Status')['status']"
+                        },
+                        "runAfter": {
+                            "GET-Status": [
+                                "SUCCEEDED"
+                            ]
+                        }
+                    },
+                    "Delay": {
+                        "type": "Wait",
+                        "inputs": {
+                            "interval": {
+                                "count": 10,
+                                "unit": "Second"
+                            }
+                        }
+                    },
+                    "GET-Status": {
+                        "type": "Http",
+                        "inputs": {
+                            "uri": "https://admin-mcsy1m56-eastus2.services.ai.azure.com/api/projects/admin-mcsy1m56-eastus2-project/threads/@{variables('thread_id')}/runs/@{body('Create_Run')?['id']}?api-version=2025-05-01",
+                            "method": "GET",
+                            "headers": {
+                                "Content-Type": "application/json"
+                            },
+                            "authentication": {
+                                "type": "ManagedServiceIdentity",
+                                "audience": "https://ai.azure.com"
+                            }
+                        },
+                        "runAfter": {
+                            "Delay": [
+                                "SUCCEEDED"
+                            ]
+                        },
+                        "runtimeConfiguration": {
+                            "contentTransfer": {
+                                "transferMode": "Chunked"
+                            }
+                        }
+                    }
+                },
+                "runAfter": {
+                    "runStatus": [
+                        "SUCCEEDED"
+                    ]
+                }
+            },
+            "Get_Run": {
+                "type": "ApiConnection",
+                "inputs": {
+                    "host": {
+                        "connection": {
+                            "referenceName": "azureagentservice"
+                        }
+                    },
+                    "method": "post",
+                    "path": "/threads/@{encodeURIComponent(variables('thread_id'))}/runs/@{encodeURIComponent(body('Create_Run')?['id'])}",
+                    "queries": {
+                        "api-version": "2025-05-01"
+                    }
+                },
+                "runAfter": {
+                    "Until": [
+                        "SUCCEEDED"
+                    ]
+                }
+            },
+            "Response": {
+                "type": "Response",
+                "kind": "Http",
+                "inputs": {
+                    "statusCode": 200,
+                    "body": "@outputs('Compose')"
+                },
+                "runAfter": {
+                    "Compose": [
+                        "SUCCEEDED"
+                    ]
+                }
+            },
+            "Create_Thread": {
+                "type": "ApiConnection",
+                "inputs": {
+                    "host": {
+                        "connection": {
+                            "referenceName": "azureagentservice-1"
+                        }
+                    },
+                    "method": "post",
+                    "path": "/threads",
+                    "queries": {
+                        "api-version": "2025-05-01"
+                    }
+                },
+                "runAfter": {}
+            },
+            "thread_id": {
+                "type": "InitializeVariable",
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "thread_id",
+                            "type": "string",
+                            "value": "@{body('Create_Thread')['id']}"
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "Create_Thread": [
+                        "SUCCEEDED"
+                    ]
+                }
+            }
+        },
+        "outputs": {},
+        "triggers": {
+            "When_an_HTTP_request_is_received": {
+                "type": "Request",
+                "kind": "Http",
+                "inputs": {
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "userMessage": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "kind": "Stateful"
+}
