@@ -16,11 +16,11 @@
 
 Before starting this lab, ensure you have completed the following:
 
-### 1. Azure AI Foundry Setup (from Lab 1)
+### 1. Azure AI Foundry Setup
 - [ ] Azure subscription with access to Azure AI Foundry
-- [ ] Azure AI Foundry hub created
-- [ ] Azure AI Foundry project created within the hub
+- [ ] Azure AI Foundry project created
 - [ ] GPT-4o model deployed in your project
+- [ ] Required Permissionst
 
 ### 2. Sample Documents
 - [ ] `recipes.md` - Located in `Lab2-Agents/sample-data/`
@@ -201,5 +201,4 @@ Congratulations! 🎉 You have successfully:
 
 ## Additional Resources
 
-- [Azure AI Foundry Documentation](https://learn.microsoft.com/azure/ai-studio/)
-- [File Search in AI Agents](https://learn.microsoft.com/azure/ai-studio/how-to/agents)
+- [File Search in AI Agents](https://learn.microsoft.com/en-us/azure/ai-foundry/agents/how-to/tools-classic/file-search-upload-files?view=foundry-classic&pivots=portal)

@@ -18,11 +18,11 @@ Unlike File Search (which uses your uploaded documents), Bing Grounding searches
 
 Before starting this lab, ensure you have completed the following:
 
-### 1. Azure AI Foundry Setup (from Lab 1)
+### 1. Azure AI Foundry Setup
 - [ ] Azure subscription with access to Azure AI Foundry
-- [ ] Azure AI Foundry hub created
-- [ ] Azure AI Foundry project created within the hub
+- [ ] Azure AI Foundry project created
 - [ ] GPT-4o model deployed in your project
+- [ ] Required Permissionst
 
 ### 2. Bing Search Access
 - [ ] Access to create Bing Search connections in AI Foundry
@@ -202,14 +202,9 @@ Congratulations! 🎉 You have successfully:
 
 ## Next Steps
 
-- Combine Bing Grounding with File Search for comprehensive answers
-- Explore using Bing for fact-checking internal documents
-- Learn about Function Calling in the next lab
-
+Continue to the next lab to learn how to connect your agent to **Azure AI Search** for enterprise search capabilities.
 ---
 
 ## Additional Resources
 
-- [Azure AI Foundry Documentation](https://learn.microsoft.com/azure/ai-studio/)
-- [Bing Search API](https://learn.microsoft.com/azure/cognitive-services/bing-web-search/)
-- [Grounding in AI Agents](https://learn.microsoft.com/azure/ai-studio/how-to/agents)
+- [Bing Search](https://learn.microsoft.com/en-us/azure/ai-foundry/agents/how-to/tools-classic/bing-custom-search-samples?view=foundry-classic&pivots=portal)

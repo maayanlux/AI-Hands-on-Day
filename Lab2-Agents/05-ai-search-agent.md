@@ -16,17 +16,17 @@
 
 Before starting this lab, ensure you have completed the following:
 
-### 1. Azure AI Foundry Setup (from Lab 1)
+### 1. Azure AI Foundry Setup
 - [ ] Azure subscription with access to Azure AI Foundry
-- [ ] Azure AI Foundry hub created
-- [ ] Azure AI Foundry project created within the hub
+- [ ] Azure AI Foundry project created
 - [ ] GPT-4o model deployed in your project
+- [ ] Required Permissionst
 
 ### 2. Permissions
 - [ ] Contributor or Owner role to create Azure AI Search resource
 
 ### 3. Storage Account
-- [ ] Storage Account created (if not already existing from Lab 1)
+- [ ] Storage Account created (if not already existing)
 
 #### Create Storage Account (if needed):
 
@@ -66,7 +66,7 @@ Before starting this lab, ensure you have completed the following:
 | **Resource group** | `rg-ai-foundry-lab` |
 | **Service name** | Enter a unique name (e.g., `search-fitness-lab`) |
 | **Location** | Same as your AI Foundry resource |
-| **Pricing tier** | Basic (or Free for testing) |
+| **Pricing tier** | Standard |
 
 6. Click **Review + create** and then **Create**
 7. Wait for deployment to complete
@@ -215,7 +215,7 @@ Connect your blob storage to Azure AI Search as a data source.
     }
   },
   "fieldMappings": [
-    { "sourceFieldName": "FitnessItemID", "targetFieldName": "id" },
+    { "sourceFieldName": "ID", "targetFieldName": "id" },
     { "sourceFieldName": "Name", "targetFieldName": "Name" },
     { "sourceFieldName": "Category", "targetFieldName": "Category" },
     { "sourceFieldName": "Price", "targetFieldName": "Price" },
@@ -228,7 +228,7 @@ Connect your blob storage to Azure AI Search as a data source.
 >
 > - **parsingMode: "jsonArray"** - This tells the indexer to loop through your JSON list. Since our `fitness-products.json` file contains an array of products `[{...}, {...}]`, the indexer needs to know to process each item in the array separately.
 >
-> - **fieldMappings** - This ensures the field names in your JSON file map correctly to the fields in your index. For example, `FitnessItemID` in the JSON maps to `id` in the index.
+> - **fieldMappings** - This ensures the field names in your JSON file map correctly to the fields in your index. For example, `ID` in the JSON maps to `id` in the index.
 
 5. Click **Save**
 6. Click **Run** to start the indexer
@@ -385,9 +385,7 @@ Congratulations! 🎉 You have successfully:
 
 ## Next Steps
 
-- Populate your index with fitness product data
-- Learn about Function Calling in the next lab
-- Explore combining multiple search sources
+Continue to the next lab to learn how to build a **Multi-Agent Solution** for complex workflows.
 
 ---
 

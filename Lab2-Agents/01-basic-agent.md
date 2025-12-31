@@ -11,15 +11,11 @@ Before starting this lab, ensure you have completed the following:
 
 ### 1. Azure AI Foundry Setup
 - [ ] Azure subscription with access to Azure AI Foundry
-- [ ] Azure AI Foundry hub created
-- [ ] Azure AI Foundry project created within the hub
+- [ ] Azure AI Foundry project created
 - [ ] GPT-4o model deployed in your project
+- [ ] Required Permissions
 
-### 2. Required Permissions
-- [ ] Contributor or Owner role on the Azure AI Foundry resource
-- [ ] Access to create and manage AI agents
-
-### 3. Access Azure AI Foundry Portal
+### 2. Access Azure AI Foundry Portal
 1. Navigate to [Azure AI Foundry](https://ai.azure.com)
 2. Sign in with your Azure credentials
 3. Select your project from the dashboard
@@ -189,5 +185,4 @@ Congratulations! 🎉 You have successfully:
 ## Additional Resources
 
 - [Azure AI Foundry Documentation](https://learn.microsoft.com/azure/ai-studio/)
-- [AI Agents Overview](https://learn.microsoft.com/azure/ai-studio/concepts/agents)
-- [Best Practices for AI Agents](https://learn.microsoft.com/azure/ai-studio/how-to/agents)
+- [AI Agents Overview](https://learn.microsoft.com/en-us/azure/ai-foundry/agents/environment-setup?view=foundry-classic)

@@ -135,8 +135,7 @@ Ensure your agent is ready in Azure AI Foundry and gather the required informati
 
 > 📝 **Save these values** - you'll need them in the next step:
 > - Agent ID: `asst_xxxxxxxxxxxxxxxx`
-> - Project Endpoint: `https://xxxxxxxx.api.azureml.ms`
-
+> - Project Endpoint: `https://xxxxxxxx.services.ai.azure.com/xxxxx`
 ---
 
 ### Step 5: Create the Workflow

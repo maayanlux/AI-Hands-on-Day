@@ -20,15 +20,11 @@ Before starting this lab, ensure you have completed the following:
 
 ### 1. Azure AI Foundry Setup
 - [ ] Azure subscription with access to Azure AI Foundry
-- [ ] Azure AI Foundry hub created
-- [ ] Azure AI Foundry project created within the hub
+- [ ] Azure AI Foundry project created
 - [ ] GPT-4o model deployed in your project
+- [ ] Required Permissions
 
-### 2. Required Permissions
-- [ ] Contributor or Owner role on the Azure AI Foundry resource
-- [ ] Access to create and manage AI agents
-
-### 3. Required Files
+### 2. Required Files
 - [ ] Download the `nutrition_data.csv` sample file (or create one with the format below)
 
 ### Sample nutrition_data.csv Format:
@@ -40,13 +36,6 @@ Date,Calories,Protein_g,Carbs_g,Fat_g,Fiber_g
 2025-01-04,1950,82,230,68,27
 2025-01-05,2050,88,245,72,29
 ```
-
-### 4. Access Azure AI Foundry Portal
-1. Navigate to [Azure AI Foundry](https://ai.azure.com)
-2. Sign in with your Azure credentials
-3. Select your project from the dashboard
-
----
 
 ## Lab Instructions
 
@@ -253,6 +242,5 @@ Congratulations! 🎉 You have successfully:
 
 ## Additional Resources
 
-- [Code Interpreter Documentation](https://learn.microsoft.com/azure/ai-studio/how-to/agents)
-- [Azure AI Foundry Agents Overview](https://learn.microsoft.com/azure/ai-studio/concepts/agents)
-- [Python Data Visualization with Matplotlib](https://matplotlib.org/)
+- [Code Interpreter Documentation](https://learn.microsoft.com/en-us/azure/ai-foundry/agents/how-to/tools-classic/code-interpreter?view=foundry-classic&pivots=python)
+

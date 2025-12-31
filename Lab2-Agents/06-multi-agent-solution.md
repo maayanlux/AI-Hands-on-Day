@@ -42,11 +42,11 @@ The system consists of:
 
 Before starting this lab, ensure you have completed the following:
 
-### 1. Azure AI Foundry Setup (from Lab 1)
+### 1. Azure AI Foundry Setup
 - [ ] Azure subscription with access to Azure AI Foundry
-- [ ] Azure AI Foundry hub created
-- [ ] Azure AI Foundry project created within the hub
+- [ ] Azure AI Foundry project created
 - [ ] GPT-4o model deployed in your project
+- [ ] Required Permissionst
 
 ---
 
@@ -331,6 +331,4 @@ Congratulations! 🎉 You have successfully:
 
 ## Additional Resources
 
-- [Azure AI Foundry Documentation](https://learn.microsoft.com/azure/ai-studio/)
-- [Multi-Agent Patterns](https://learn.microsoft.com/azure/ai-studio/how-to/agents)
-- [Agent Tools and Connections](https://learn.microsoft.com/azure/ai-studio/how-to/agents)
+- [Multi-Agent Patterns](https://learn.microsoft.com/en-us/training/modules/develop-multi-agent-azure-ai-foundry/)

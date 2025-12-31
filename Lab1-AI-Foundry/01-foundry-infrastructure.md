@@ -4,8 +4,6 @@
 
 This lab covers the setup and configuration of the Microsoft Foundry infrastructure. You will create the necessary resources to start building AI applications, including a Microsoft AI Foundry Resource, a Project, and deploying a GPT-4o model.
 
-📚 **Reference:** [Quickstart: Set up your first Foundry resource](https://learn.microsoft.com/azure/ai-studio/quickstarts/get-started-portal)
-
 ---
 
 ## Prerequisites
