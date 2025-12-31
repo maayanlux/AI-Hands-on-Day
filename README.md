@@ -15,7 +15,7 @@ This workshop takes you from setting up Azure AI Foundry infrastructure to build
 ## 🗂️ Repository Structure
 
 ```
-├── Lab1-AI-Foundry/
+├── Lab1-Foundry/
 │   └── 01-foundry-infrastructure.md    # Azure AI Foundry setup
 ├── Lab2-Agents/
 │   ├── 01-basic-agent.md               # Basic health advisor agent
@@ -25,14 +25,18 @@ This workshop takes you from setting up Azure AI Foundry infrastructure to build
 │   ├── 05-ai-search-agent.md           # Agent with Azure AI Search
 │   ├── 06-multi-agent-solution.md      # Multi-agent orchestration
 │   └── sample-data/                    # Sample files for labs
-│       ├── fitness-products.json
-│       ├── guidelines.md
-│       ├── nutrition_data.csv
-│       └── recipes.md
-└── Lab3-MCP-LogicAPP/
-    ├── 01-mcp-logic-app.md             # MCP server with Logic Apps
-    ├── checkMCP-url.ps1                # Helper script for MCP URL
-    └── logic-app-flow.json             # Logic App workflow definition
+├── Lab3-MCP-LogicAPP/
+│   ├── 01-mcp-logic-app.md             # MCP server with Logic Apps
+│   ├── checkMCP-url.ps1                # Helper script for MCP URL
+│   └── logic-app-flow.json             # Logic App workflow definition
+├── Lab4-Advance/
+│   ├── MCP-Client-Server-Code.md       # MCP architecture explanation
+│   ├── server.py                       # MCP server with inventory tools
+│   ├── client.py                       # AI Agent MCP client
+│   ├── requirements.txt                # Python dependencies
+│   └── .env.example                    # Environment template
+└── Lab5-DeployTo365/
+    └── 01-deploy-agent-to-copilot365.md  # Deploy agent to M365 Copilot
 ```
 
 ---
@@ -43,7 +47,7 @@ This workshop takes you from setting up Azure AI Foundry infrastructure to build
 
 | Topic | Description |
 |-------|-------------|
-| **Resource Setup** | Create Resource Group, AI Foundry Hub, and Project |
+| **Resource Setup** | Create Resource Group, AI Foundry, and Project |
 | **Model Deployment** | Deploy GPT-4o model |
 | **Permissions** | Configure RBAC for AI development |
 
@@ -77,6 +81,32 @@ Build progressively more capable AI agents:
 | **VS Code Client** | Use agent as MCP tool in VS Code |
 
 **Duration:** ~45 minutes
+
+---
+
+### Lab 4: Advanced MCP (Client-Server Code)
+
+| Topic | Description |
+|-------|-------------|
+| **MCP Server** | Build custom MCP server with Python (FastMCP) |
+| **MCP Client** | Create AI Agent that discovers and calls MCP tools |
+| **stdio Transport** | Local subprocess communication |
+| **Dynamic Discovery** | Agent finds tools at runtime |
+
+**Duration:** ~45 minutes
+
+---
+
+### Lab 5: Deploy Agent to Microsoft 365 Copilot
+
+| Topic | Description |
+|-------|-------------|
+| **M365 Agents Toolkit** | Install VS Code extension |
+| **Declarative Agent** | Create M365 Copilot agent project |
+| **Foundry Integration** | Connect to Azure AI Foundry agent |
+| **Teams Testing** | Test agent in Microsoft Teams |
+
+**Duration:** ~30 minutes
 
 ---
 
@@ -120,6 +150,15 @@ Before starting the labs, ensure you have:
               │      VS Code          │
               │    (MCP Client)       │
               └───────────────────────┘
+                          │
+    ┌─────────────────────┼─────────────────────┐
+    │                     │                     │
+    ▼                     ▼                     ▼
+┌─────────┐      ┌──────────────┐      ┌──────────────┐
+│ Lab 4   │      │   Lab 5      │      │   Lab 3      │
+│ Python  │      │   M365       │      │  Logic App   │
+│ MCP     │      │   Copilot    │      │   MCP        │
+└─────────┘      └──────────────┘      └──────────────┘
 ```
 
 ---
@@ -133,6 +172,8 @@ By completing these labs, you will:
 3. **Implement Knowledge Sources** - Use File Search, Bing, and AI Search
 4. **Design Multi-Agent Systems** - Orchestrate multiple agents for complex tasks
 5. **Expose Agents via MCP** - Make agents available as tools in VS Code
+6. **Build MCP Servers** - Create custom tool servers with Python
+7. **Deploy to M365 Copilot** - Bring your agent to Microsoft 365
 
 ---
 
@@ -147,6 +188,8 @@ By completing these labs, you will:
 | **Azure AI Search** | Structured search with custom indexes |
 | **Multi-Agent** | Multiple specialists coordinated by an orchestrator |
 | **MCP** | Model Context Protocol for AI tool integration |
+| **FastMCP** | Python library for building MCP servers |
+| **M365 Copilot** | Microsoft 365 AI assistant that can use custom agents |
 
 ---
 
@@ -155,7 +198,9 @@ By completing these labs, you will:
 1. **Clone this repository** or download the files
 2. **Start with Lab 1** to set up your Azure AI Foundry infrastructure
 3. **Progress through Lab 2** to build increasingly capable agents
-4. **Complete Lab 3** to expose your agent via MCP
+4. **Complete Lab 3** to expose your agent via Logic Apps MCP
+5. **Complete Lab 4** to build custom MCP server with Python
+6. **Complete Lab 5** to deploy your agent to Microsoft 365 Copilot
 
 ---
 
