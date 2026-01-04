@@ -72,7 +72,7 @@ The Logic App needs a managed identity to authenticate with Azure AI Foundry.
 1. Go to your **AI Foundry Project** in the Azure Portal
 2. Select **Access Control (IAM)**
 3. Click **+ Add** → **Add role assignment**
-4. Search for and select: `Azure AI Developer`
+4. Search for and select: `Azure AI Developer`, `Azure AI Project Manager`, `Cognitive Services User`, `Cognitive Services OpenAI User`
 5. Click **Next**
 6. Select **Managed identity**
 7. Click **+ Select members**
@@ -147,11 +147,16 @@ Now create the Logic App workflow that will call your AI agent.
 3. Enter workflow name: `fitness-agent-trigger`
 4. Select **Stateful**
 5. Click **Create**
-6. Open the workflow and click **Code View**
-7. Replace the content with the workflow JSON from `logic-app-flow.json`
-8. **Modify the connection** with your own project endpoint
-9. **Update the Agent ID** in the workflow
-10. Click **Save**
+6. Create first action:  **When an HTTP request is received**
+7. Create second action: **Create Thread**
+> 💡 This will create the Foundry Connection: make sure the connection name is: **azureagentservice**
+8. Open the workflow and click **Code View**
+9. Replace the content with the workflow JSON from `logic-app-flow.json`
+10. **Modify the connection** with your own project endpoint at line **107** 
+> 💡Replace ONLY the connection name "**Your-Project-Connection**/threads/@{variables('thread_id')}/runs/@{body('Create_Run')?['id']}?api-version=2025-05-01"
+11. **Update the Agent ID** in the workflow at line **16**
+12. Make sure the referenceName is: **azureagentservice**
+13. Click **Save**
 
 #### Key Configuration Points:
 
@@ -162,8 +167,14 @@ Now create the Logic App workflow that will call your AI agent.
 | **GET-Status action** | Update with your project endpoint |
 
 ---
+### Step 6: Create an app registration
 
-### Step 6: Get the MCP Endpoint URL
+To create an app registration for your logic app to use in your Easy Auth setup, follow these steps:
+https://learn.microsoft.com/en-us/azure/logic-apps/set-up-model-context-protocol-server-standard#create-an-app-registration 
+then : https://learn.microsoft.com/en-us/azure/logic-apps/set-up-model-context-protocol-server-standard#set-up-easy-auth-for-your-mcp-server
+
+
+### Step 7: Get the MCP Endpoint URL
 
 Now retrieve the MCP endpoint URL to connect it to VS Code.
 
@@ -186,7 +197,7 @@ Now retrieve the MCP endpoint URL to connect it to VS Code.
 
 ---
 
-### Step 7: Configure VS Code MCP Client
+### Step 8: Configure VS Code MCP Client
 
 Connect your Logic App MCP server to Visual Studio Code.
 
@@ -314,3 +325,4 @@ Congratulations! 🎉 You have successfully:
 - [Azure Logic Apps Documentation](https://learn.microsoft.com/azure/logic-apps/)
 - [VS Code MCP Integration](https://code.visualstudio.com/docs)
 - [Azure AI Foundry Agents](https://learn.microsoft.com/azure/ai-studio/how-to/agents)
+- [Set up Standard logic apps as remote MCP servers ](https://learn.microsoft.com/en-us/azure/logic-apps/set-up-model-context-protocol-server-standard)
