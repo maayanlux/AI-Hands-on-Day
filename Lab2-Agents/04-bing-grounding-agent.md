@@ -31,7 +31,22 @@ Before starting this lab, ensure you have completed the following:
 
 ## Lab Instructions
 
-### Step 1: Navigate to Agents
+### Step 1: Create a Bing Grounding Connection
+
+Before creating the agent, you need to set up a Bing Search connection:
+
+1. Navigate to [Azure AI Foundry](https://ai.azure.com)
+2. Click on **Management Center**
+3. Under your project, click on **Connected Resources**
+4. Click **New Connection**
+5. Choose **Grounding with Bing Search**
+6. Click **Add Connection**
+
+> 💡 This connection will be available when configuring your agent's knowledge sources.
+
+---
+
+### Step 2: Navigate to Agents
 
 1. Go to [Azure AI Foundry](https://ai.azure.com)
 2. Select your **Project**
@@ -40,7 +55,7 @@ Before starting this lab, ensure you have completed the following:
 
 ---
 
-### Step 2: Create the Bing Grounding Agent
+### Step 3: Create the Bing Grounding Agent
 
 Configure your agent with the following settings:
 
@@ -67,7 +82,7 @@ Always:
 
 ---
 
-### Step 3: Add Bing Grounding Connection
+### Step 4: Add Bing Grounding to the Agent
 
 This is the key step that enables your agent to search the web!
 
@@ -90,7 +105,7 @@ This is the key step that enables your agent to search the web!
 
 ---
 
-### Step 4: Test Your Agent in the Playground
+### Step 5: Test Your Agent in the Playground
 
 1. After creating the agent, click **Try in Playground**
 2. Ensure `Agent-health-bing` is selected
