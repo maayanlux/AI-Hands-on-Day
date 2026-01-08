@@ -51,7 +51,6 @@ This workshop takes you from setting up Azure AI Foundry infrastructure to build
 | **Model Deployment** | Deploy GPT-4o model |
 | **Permissions** | Configure RBAC for AI development |
 
-**Duration:** ~30 minutes
 
 ---
 
@@ -68,7 +67,6 @@ Build progressively more capable AI agents:
 | 2.5 | AI Search | Product catalog search |
 | 2.6 | Multi-Agent | Orchestrated ticket triage system |
 
-**Duration:** ~2-3 hours (all labs)
 
 ---
 
@@ -80,7 +78,6 @@ Build progressively more capable AI agents:
 | **Agent Integration** | Connect Logic App to AI Foundry Agent |
 | **VS Code Client** | Use agent as MCP tool in VS Code |
 
-**Duration:** ~45 minutes
 
 ---
 
@@ -93,7 +90,6 @@ Build progressively more capable AI agents:
 | **stdio Transport** | Local subprocess communication |
 | **Dynamic Discovery** | Agent finds tools at runtime |
 
-**Duration:** ~45 minutes
 
 ---
 
@@ -106,7 +102,6 @@ Build progressively more capable AI agents:
 | **Foundry Integration** | Connect to Azure AI Foundry agent |
 | **Teams Testing** | Test agent in Microsoft Teams |
 
-**Duration:** ~30 minutes
 
 ---
 
