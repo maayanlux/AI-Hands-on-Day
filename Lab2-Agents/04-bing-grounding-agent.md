@@ -217,7 +217,7 @@ Congratulations! 🎉 You have successfully:
 
 ## Next Steps
 
-Continue to the next lab to learn how to connect your agent to **Azure AI Search** for enterprise search capabilities.
+- Continue to the next lab to learn how to connect your agent to **Azure AI Search** for enterprise search capabilities.
 ---
 
 ## Additional Resources
