@@ -95,8 +95,9 @@ This lab covers the setup and configuration of the Microsoft Foundry infrastruct
 
 ## Verification
 
-1. Go to the **Playground** in the left menu (under **Build**)
-2. Ensure your `gpt-4o` deployment is selected in the **Deployment** dropdown
+1. Go to the **Playgrounds** in the left menu
+2. Click on the **Chat playground**
+3. Ensure your `gpt-4o` deployment is selected in the **Deployment** dropdown
 3. Type a message in the chat window:
    ```
    Hello, are you ready for the workshop?
