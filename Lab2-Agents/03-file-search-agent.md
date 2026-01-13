@@ -86,7 +86,7 @@ This is the key step that enables your agent to search through documents!
 > 
 > Think of it as a smart index that helps the agent quickly find the right information from your documents when answering questions.
 
-6. Click **Create** to save your agent
+6. It will automaticlly save your agent
 
 ---
 

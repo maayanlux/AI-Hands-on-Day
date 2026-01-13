@@ -93,7 +93,7 @@ This is the key step that enables your agent to search the web!
 5. Click **Add connection**
 6. Click **Next**
 7. Leave the optional parameters as **default**
-8. Click **Create** to save your agent
+8. It will automaticlly save your agent
 
 > 💡 **What happens when you add Bing Grounding?**
 > 

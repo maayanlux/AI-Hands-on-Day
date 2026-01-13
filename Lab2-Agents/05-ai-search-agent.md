@@ -280,7 +280,7 @@ Be helpful, encouraging, and prioritize user safety!
 6. Select your index: `myfitnessindex`
 7. Set Search type: **Simple**
 8. Click **Add**
-9. Click **Create** to save your agent
+9. It will automaticlly save your agent
 
 ---
 

@@ -90,9 +90,9 @@ This is the key step that differentiates this agent from the basic agent!
 1. After entering the agent name, model, and instructions
 2. Scroll down to the **Actions** section
 3. Find and **enable** the **Code Interpreter** toggle/checkbox
-4. Click **Add files** or **Upload** in the Code Interpreter section
+4. Click **Select local files** in the Code Interpreter section
 5. Upload the `nutrition_data.csv` file
-6. Click **Create** to save your agent
+6. It will automaticlly save your agent
 
 > 💡 **Tip:** The uploaded file will be available to the agent for all conversations. Users can also attach additional files in individual messages.
 

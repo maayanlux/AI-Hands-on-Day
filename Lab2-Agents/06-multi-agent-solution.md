@@ -80,7 +80,7 @@ Respond with one of the following levels:
 Only output the urgency level and a very brief explanation.
 ```
 
-6. Click **Create**
+6. It will automaticlly save your agent
 
 ---
 
@@ -110,7 +110,7 @@ Choose from the following teams:
 Base your answer on the content of the ticket. Respond with the team name and a very brief explanation.
 ```
 
-3. Click **Create**
+3. It will automaticlly save your agent
 
 ---
 
@@ -139,7 +139,7 @@ Use the following scale:
 Base your estimate on the complexity implied by the ticket. Respond with the effort level and a brief justification.
 ```
 
-3. Click **Create**
+3. It will automaticlly save your agent
 
 ---
 
@@ -160,8 +160,6 @@ The main orchestrator agent coordinates all three specialist agents. It receives
 ```
 Triage the given ticket. Use the connected tools to determine the ticket's priority, which team it should be assigned to, and how much effort it may take.
 ```
-
-3. **Do not click Create yet** - proceed to Step 5 to add connected agents
 
 ---
 
@@ -191,7 +189,7 @@ This is the key step that enables the multi-agent collaboration!
 | **Agent** | `Agent-Effort` |
 | **Description** | `Determines the effort required to complete the ticket` |
 
-4. Click **Create** to save the Orchestrator agent
+4. It will automaticlly save your agent
 
 ---
 

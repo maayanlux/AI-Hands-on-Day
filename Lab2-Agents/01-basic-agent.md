@@ -61,7 +61,7 @@ You provide general health, fitness, and nutrition information, but always:
 1. Enter the **Agent Name**: `Agent-fun-fit-health-advisor`
 2. Select the **Model**: `gpt-4o` from the dropdown
 3. Paste the **Instructions** in the instructions text box
-4. Click **Create** to save your agent
+4. It will automaticlly save your agent
 
 ---
 
