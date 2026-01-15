@@ -40,7 +40,8 @@ Before creating the agent, you need to set up a Bing Search connection:
 3. Under your project, click on **Connected Resources**
 4. Click **New Connection**
 5. Choose **Grounding with Bing Search**
-6. Click **Add Connection**
+6. Create new **Grounding with Bing resource**
+7. Click **Add Connection**
 
 > 💡 This connection will be available when configuring your agent's knowledge sources.
 

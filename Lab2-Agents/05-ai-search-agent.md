@@ -42,11 +42,14 @@ Before starting this lab, ensure you have completed the following:
 | **Resource group** | `rg-ai-foundry-lab` |
 | **Storage account name** | Enter a unique name (e.g., `stfitnesslabXXXX`) |
 | **Region** | Same as your AI Foundry resource |
+| **Preferred storage type** | Azure Blob Storage |
+| **Primary workload** | Other |
 | **Performance** | Standard |
 | **Redundancy** | Locally-redundant storage (LRS) |
 
 6. Click **Review + create** and then **Create**
 7. Wait for deployment to complete
+8. Give yourself the **Storage Blob Data Contributor** permission
 
 ---
 
@@ -133,10 +136,10 @@ Configure your index with these fields and attributes:
 | Field Name | Type | Searchable | Filterable | Retrievable |
 |------------|------|:----------:|:----------:|:-----------:|
 | **id** | String | ❌ | ❌ | ✅ |
-| **Name** | String | ✅ | ✅ | ✅ |
-| **Category** | String | ✅ | ✅ | ✅ |
+| **Name** | Edm.String | ✅ "analyzer": "standard.lucene"| ✅ | ✅ |
+| **Category** | Edm.String | ✅ "analyzer": "standard.lucene"| ✅ | ✅ |
 | **Price** | Double | ❌ | ✅ | ✅ |
-| **Description** | String | ✅ | ❌ | ✅ |
+| **Description** | Edm.String | ✅ "analyzer": "standard.lucene"| ❌ | ✅ |
 
 #### Field Attributes Explained:
 
@@ -201,7 +204,7 @@ Connect your blob storage to Azure AI Search as a data source.
 
 1. In your **Azure AI Search** resource, click **Indexers** in the left menu
 2. Click **+ Add indexer**
-3. Click **Open in JSON** (or switch to JSON view)
+3. Click **Add indexer (JSON)**
 4. Paste the following JSON configuration:
 
 ```json
