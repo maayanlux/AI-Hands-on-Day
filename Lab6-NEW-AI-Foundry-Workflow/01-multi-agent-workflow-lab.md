@@ -11,8 +11,6 @@ The workflow consists of:
 4.  **❓ Ask a Question**: Prompts the user for approval with an **interactive human-in-the-loop step** where the user can approve or reject the changes.
 5.  **📧 Agent-Upgrade-Notification**: Sends an email notification via Logic App based on user response.
 
-> 💡 **Note**: This workflow includes an interactive component that pauses execution and asks the user a question, requiring human approval before proceeding with notifications.
-
 ## ✅ Prerequisites
 
 Before starting this lab, ensure you have completed the following:
@@ -248,7 +246,7 @@ Some configurations (like saving output as `text:` instead of `message`) are **N
 
 ##### ❌ **Else Branch (Reject)**
 
-**5a. Agent-Upgrade-Notification (Reject)**
+**5b. Agent-Upgrade-Notification (Reject)**
 *   **Action**: Add Agent
 *   **Agent**: Select `Agent-Upgrade-Notification`
 *   **Configuration**:
@@ -280,7 +278,7 @@ Congratulations! 🎉 You have successfully:
 1. ✅ Created an orchestrated multi-agent workflow in Azure AI Foundry
 2. ✅ Implemented conditional logic with approval gates
 3. ✅ Created a Logic App email workflow with OpenAPI schema
-4. ✅ Built 5 specialized AI agents for Kubernetes release monitoring
+4. ✅ Built specialized AI agents for Kubernetes release monitoring
 5. ✅ Configured Bing Search integration for version detection
 6. ✅ Implemented Code Interpreter for YAML manipulation
 
@@ -303,7 +301,6 @@ Congratulations! 🎉 You have successfully:
 > - **DevOps Integration**: Connect workflows to Azure DevOps, GitHub Actions, and other CI/CD pipelines for automated deployments
 > - **MCP Extensibility**: Integrate MCP servers to add custom functionality and external data sources
 > - **Foundry IQ**: Use Azure AI Foundry IQ as intelligent knowledge layer
-> - **Workflow Orchestration**: Design repeatable, scalable automation patterns for enterprise scenarios
 
 ---
 
