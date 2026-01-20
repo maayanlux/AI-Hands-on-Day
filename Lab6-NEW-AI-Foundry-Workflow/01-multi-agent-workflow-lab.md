@@ -4,11 +4,12 @@ In this lab, you will orchestrate specialized AI agents to automate the monitori
 
 ## 🌟 Overview
 
-The workflow consists of **5 Agents**:
+The workflow consists of:
 1.  **🔍 Agent-K8s-Release-Checker**: Finds the latest K8s version using Bing Search.
 2.  **📝 Agent-K8s-Change-Summarizer**: Summarizes breaking changes and features from the release notes.
 3.  **✏️ Agent-Edit-Yaml**: Updates an existing `k8s.yaml` file with the new version.
-4.  **📧 Agent-Upgrade-Notification**: Sends an email notification via Logic App.
+4.  **❓ Ask a Question**: Prompts the user for approval with an interactive human-in-the-loop step.
+5.  **📧 Agent-Upgrade-Notification**: Sends an email notification via Logic App based on user response.
 
 ## ✅ Prerequisites
 
@@ -188,7 +189,7 @@ Some configurations (like saving output as `text:` instead of `message`) are **N
     C --> E[Ask a Question]
     E --> F{If/Else Condition}
     F -- Approve --> G[Agent-Upgrade-Notification]
-    I --> End
+    G --> End
     F -- Reject --> J[Agent-Upgrade-Notification]
     J --> End
     ```
@@ -254,6 +255,8 @@ Some configurations (like saving output as `text:` instead of `message`) are **N
     *   **Save agent output as**: `Local.LatestMessage`
 
 ---
+
+> 💡 **Reference**: You can review the complete workflow configuration in `data/workflow.yaml` as a reference for the YAML structure and settings.
 
 4.  **Save** and click on **Preview** the workflow.
 
