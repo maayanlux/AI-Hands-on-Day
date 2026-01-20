@@ -35,8 +35,15 @@ This workshop takes you from setting up Azure AI Foundry infrastructure to build
 │   ├── client.py                       # AI Agent MCP client
 │   ├── requirements.txt                # Python dependencies
 │   └── .env.example                    # Environment template
-└── Lab5-DeployTo365/
-    └── 01-deploy-agent-to-copilot365.md  # Deploy agent to M365 Copilot
+├── Lab5-DeployTo365/
+│   └── 01-deploy-agent-to-copilot365.md  # Deploy agent to M365 Copilot
+└── Lab6-NEW-AI-Foundry-Workflow/
+    ├── 01-multi-agent-workflow-lab.md  # Multi-agent K8s workflow automation
+    └── data/                            # Workflow resources
+        ├── k8s.yaml                     # Kubernetes deployment file
+        ├── k8s.zip                      # Zipped K8s YAML for Code Interpreter
+        ├── schema.json                  # OpenAPI schema for Logic App
+        └── send-email.json              # Logic App workflow definition
 ```
 
 ---
@@ -105,6 +112,21 @@ Build progressively more capable AI agents:
 
 ---
 
+### Lab 6: Multi-Agent Workflow Automation
+
+| Topic | Description |
+|-------|-------------|
+| **Workflow Orchestration** | Build automated K8s release monitoring workflow |
+| **Multi-Agent Coordination** | Chain specialized agents sequentially |
+| **Conditional Logic** | Implement approval gates with If/Else conditions |
+| **Custom Tools (OpenAPI)** | Integrate Logic App via OpenAPI schema |
+| **Code Interpreter** | Use Python for YAML manipulation |
+| **Human-in-the-Loop** | Add "Ask a Question" action for approvals |
+| **Workflow Variables** | Manage data flow with System and Local variables |
+
+
+---
+
 ## 📋 Prerequisites
 
 Before starting the labs, ensure you have:
@@ -133,8 +155,9 @@ Before starting the labs, ensure you have:
 │  │  • Health Advisor    • Code Interpreter        │             │
 │  │  • File Search       • AI Search               │             │
 │  │  • Multi-Agent Orchestrator                    │             │
-│  └──────────────────────┬────────────────────────┘             │
-└─────────────────────────┼───────────────────────────────────────┘
+│  │  • K8s Release Workflow (Lab 6)                │             │
+│  └──────────────────────┬─────────────────────────┘             │
+└─────────────────────────┼─────────────────────────────────────────┘
                           │
               ┌───────────┴───────────┐
               │     Logic App         │
@@ -169,45 +192,7 @@ By completing these labs, you will:
 5. **Expose Agents via MCP** - Make agents available as tools in VS Code
 6. **Build MCP Servers** - Create custom tool servers with Python
 7. **Deploy to M365 Copilot** - Bring your agent to Microsoft 365
-
----
-
-## 📚 Key Concepts
-
-| Concept | Description |
-|---------|-------------|
-| **AI Agent** | Autonomous AI assistant with instructions and tools |
-| **Code Interpreter** | Execute Python code in a sandboxed environment |
-| **File Search** | Search through uploaded documents using vectors |
-| **Bing Grounding** | Real-time web search for current information |
-| **Azure AI Search** | Structured search with custom indexes |
-| **Multi-Agent** | Multiple specialists coordinated by an orchestrator |
-| **MCP** | Model Context Protocol for AI tool integration |
-| **FastMCP** | Python library for building MCP servers |
-| **M365 Copilot** | Microsoft 365 AI assistant that can use custom agents |
-
----
-
-## 🛠️ Getting Started
-
-1. **Clone this repository** or download the files
-2. **Start with Lab 1** to set up your Azure AI Foundry infrastructure
-3. **Progress through Lab 2** to build increasingly capable agents
-4. **Complete Lab 3** to expose your agent via Logic Apps MCP
-5. **Complete Lab 4** to build custom MCP server with Python
-6. **Complete Lab 5** to deploy your agent to Microsoft 365 Copilot
-
----
-
-## 📖 Additional Resources
-
-- [Azure AI Foundry Documentation](https://learn.microsoft.com/azure/ai-studio/)
-- [AI Agents Overview](https://learn.microsoft.com/azure/ai-studio/concepts/agents)
-- [Azure AI Search Documentation](https://learn.microsoft.com/azure/search/)
-- [Model Context Protocol](https://modelcontextprotocol.io/)
-- [Azure Logic Apps](https://learn.microsoft.com/azure/logic-apps/)
-
----
+8. **Build Automated Workflows** - Create multi-agent workflows at  the NEW Foundry portal, with conditional logic and human approval gates
 
 ## 🤝 Support
 
