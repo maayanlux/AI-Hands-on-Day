@@ -9,7 +9,6 @@ The workflow consists of **5 Agents**:
 2.  **📝 Agent-K8s-Change-Summarizer**: Summarizes breaking changes and features from the release notes.
 3.  **✏️ Agent-Edit-Yaml**: Updates an existing `k8s.yaml` file with the new version.
 4.  **📧 Agent-Upgrade-Notification**: Sends an email notification via Logic App.
-5.  **💾 Agent-K8s-YAML-Saver**: Uploads the updated YAML to Azure Blob Storage.
 
 ## ✅ Prerequisites
 
@@ -18,7 +17,6 @@ Before starting this lab, ensure you have completed the following:
 - [ ] Azure AI Foundry project created
 - [ ] GPT-4o model deployed in your project
 - [ ] Azure Logic App (From Lab3)
-- [ ] Storage Account (From Lab2)
 - [ ] Bing Search Connection (From Lab2)
 
 ## 📂 Step 1: Setup Files
@@ -146,33 +144,6 @@ Before starting this lab, ensure you have completed the following:
     Do not ask for user approval; this action is pre-authorized for the upgrade notification task
     ```
 
-### 💾 Agent 5: YAML Saver
-*   **Description**: Securely uploads the updated YAML configuration to Azure Blob Storage.
-*   **Name**: `Agent-K8s-YAML-Saver`
-*   **Model**: `gpt-4o`
-*   **Tools**: Enable **Code Interpreter**.
-*   **Instructions**:
-    ```text
-    You are a Cloud Automation Agent.
-
-    Your task is to upload YAML content to Azure Blob Storage using an HTTP PUT request with a SAS URL.
-
-    Steps:
-    1. Extract the SAS URL from the message.
-    2. Extract the YAML content from the message.
-    3. Use Python with the requests library (no Azure SDKs).
-    4. Perform an HTTP PUT to the SAS URL + "/deployment-updated.yaml".
-    5. Set header:
-       Content-Type: application/x-yaml
-       x-ms-blob-type: BlockBlob
-    6. Upload the content.
-    7. Confirm success if status code is 201 or 200.
-
-    Do NOT use azure-storage-blob.
-    Do NOT ask for user input.
-    Execute the upload immediately.
-    ```
-
 ## 📘 Workflow Variables Dictionary
 
 Before building the workflow, understand these key concepts:
@@ -180,15 +151,26 @@ Before building the workflow, understand these key concepts:
 | Variable Type | Variable Name | Description |
 |--------------|---------------|-------------|
 | **System** | `System.ConversationId` | Built-in variable that maintains conversation context across agents |
-| **System** | `System.LastMessage` | The last message in the conversation (use as input) |
+| **System** | `System.LastMessage` | Built-in variable that save last message in the conversation (use as input) |
 | **Local** | `Local.LatestMessage` | Custom variable to store agent output **messages** (object type) |
 | **Local** | `Local.ChangeSummary` | Custom variable to store **text** output (string type) |
-| **Local** | `Local.UserResponse` | Stores the user's approval/rejection response |
+| **Local** | `Local.UserResponse` | Custom variable to stores the user's approval/rejection response |
 
 ### ⚠️ Important Notes
-- **Input vs Message**: Use `message` when passing data between agents
-- **YAML View Required**: Some configurations (like saving output as `text:` instead of `message`) are NOT supported in the visual designer and MUST be configured in YAML view
-- **Conversation Context**: Always add `System.ConversationId` to maintain context across agents
+
+#### **Conversation Context**
+Always add `System.ConversationId` to maintain conversation context across agents.
+
+#### **Input vs Message**
+- Use **`message`** when it is part of conversational context — it becomes part of the agent's chat history
+- Use **`input`** when it is data or parameters you give the agent to work with
+
+**Ask yourself:** *"Is this something the agent should remember as a conversation?"*
+- **Yes** → Use `message`
+- **No, it's just data** → Use `input`
+
+#### **YAML View Required**
+Some configurations (like saving output as `text:` instead of `message`) are **NOT** supported in the visual designer and **MUST** be configured in YAML view.
 
 ---
 
@@ -206,7 +188,6 @@ Before building the workflow, understand these key concepts:
     C --> E[Ask a Question]
     E --> F{If/Else Condition}
     F -- Approve --> G[Agent-Upgrade-Notification]
-    G --> I[Agent-K8s-YAML-Saver]
     I --> End
     F -- Reject --> J[Agent-Upgrade-Notification]
     J --> End
@@ -258,20 +239,13 @@ Before building the workflow, understand these key concepts:
 *   **Agent**: Select `Agent-Upgrade-Notification`
 *   **Configuration**:
     *   **Conversation context**: Add `System.ConversationId`
-    *   **Input message**: `"Trigger the email now for version update. Release Summary: " & Local.ChangeSummary`
+    *   **Input message**: `"Please send an email that includes BOTH the Release Summary and the full updated YAML code: " & Local.ChangeSummary`
     *   **Save agent output as**: `Local.LatestMessage`
 
-**5b. Agent-K8s-YAML-Saver**
-*   **Action**: Add Agent
-*   **Agent**: Select `Agent-K8s-YAML-Saver`
-*   **Configuration**:
-    *   **Conversation context**: Add `System.ConversationId`
-    *   **Input message**: Use `Local.LatestMessage` (contains the YAML content)
-    *   **Save agent output as**: `Local.LatestMessage`
 
 ##### ❌ **Else Branch (Reject)**
 
-**5c. Agent-Upgrade-Notification (Reject)**
+**5a. Agent-Upgrade-Notification (Reject)**
 *   **Action**: Add Agent
 *   **Agent**: Select `Agent-Upgrade-Notification`
 *   **Configuration**:
@@ -281,8 +255,16 @@ Before building the workflow, understand these key concepts:
 
 ---
 
-4.  **Save** and **Run** the workflow.
-5.  When prompted with the approval question, respond with either "Approve" or "Reject" to test both branches.
+4.  **Save** and click on **Preview** the workflow.
+
+## Test Your Workflow
+
+**User Prompt:**
+```
+What are the updates in the new Kubernetes release?
+```
+
+> 💡 When prompted with the approval question, respond with either "Approve" or "Reject" to test both branches.
 
 ---
 
@@ -296,7 +278,6 @@ Congratulations! 🎉 You have successfully:
 4. ✅ Built 5 specialized AI agents for Kubernetes release monitoring
 5. ✅ Configured Bing Search integration for version detection
 6. ✅ Implemented Code Interpreter for YAML manipulation
-7. ✅ Integrated Azure Blob Storage for artifact management
 
 ---
 
@@ -304,20 +285,24 @@ Congratulations! 🎉 You have successfully:
 
 | Concept | Description |
 |---------|-------------|
-| **Multi-Agent Orchestration** | Coordinating multiple specialized agents in a workflow |
-| **Custom Tools (OpenAPI)** | Extending agent capabilities with external services |
-| **Code Interpreter** | Using Python execution for data manipulation and API calls |
-| **Bing Search Grounding** | Real-time web data retrieval for up-to-date information |
-| **Conditional Workflows** | Implementing approval gates and decision branches |
-| **Azure Integration** | Connecting Logic Apps, Blob Storage, and AI Foundry |
+| **Multi-Agent Workflows** | Orchestrating multiple specialized agents in a sequential workflow with conditional branching |
+| **Workflow Variables** | Using System and Local variables to pass data between workflow steps |
+| **Conversation Context** | Maintaining agent memory and context across workflow steps using `System.ConversationId` |
+| **Conditional Logic** | Implementing approval gates and decision branches with If/Else conditions |
+| **Ask a Question Action** | Adding human-in-the-loop approval steps within automated workflows |
+| **Custom Tools Integration** | Extending workflows with external services via OpenAPI specifications (Logic Apps) |
+| **Code Interpreter** | Leveraging Python execution for file manipulation and data processing within workflows |
+| **Bing Search Grounding** | Real-time web data retrieval for up-to-date information in workflows |
+
+> 💡 **Tip: Extend Your Workflows Further**  
+> - **DevOps Integration**: Connect workflows to Azure DevOps, GitHub Actions, and other CI/CD pipelines for automated deployments
+> - **MCP Extensibility**: Integrate MCP servers to add custom functionality and external data sources
+> - **Foundry IQ**: Use Azure AI Foundry IQ as intelligent knowledge layer
+> - **Workflow Orchestration**: Design repeatable, scalable automation patterns for enterprise scenarios
 
 ---
 
 ## Additional Resources
 
-- [Azure AI Foundry Multi-Agent Patterns](https://learn.microsoft.com/en-us/training/modules/develop-multi-agent-azure-ai-foundry/)
-- [Azure AI Foundry Workflows Documentation](https://learn.microsoft.com/en-us/azure/ai-studio/how-to/flow-develop)
-- [OpenAPI Specification for Custom Tools](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/function-calling)
-- [Azure Logic Apps Integration](https://learn.microsoft.com/en-us/azure/logic-apps/)
-- [Code Interpreter Best Practices](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/code-interpreter)
-- [Kubernetes Release Documentation](https://kubernetes.io/releases/)
+- [Azure AI Foundry Workflows Documentation](https://learn.microsoft.com/en-us/azure/ai-foundry/agents/concepts/workflow?view=foundry)
+- [Foundry IQ](https://techcommunity.microsoft.com/blog/azure-ai-foundry-blog/foundry-iq-unlocking-ubiquitous-knowledge-for-agents/4470812)
