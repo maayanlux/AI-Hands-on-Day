@@ -8,8 +8,10 @@ The workflow consists of:
 1.  **🔍 Agent-K8s-Release-Checker**: Finds the latest K8s version using Bing Search.
 2.  **📝 Agent-K8s-Change-Summarizer**: Summarizes breaking changes and features from the release notes.
 3.  **✏️ Agent-Edit-Yaml**: Updates an existing `k8s.yaml` file with the new version.
-4.  **❓ Ask a Question**: Prompts the user for approval with an interactive human-in-the-loop step.
+4.  **❓ Ask a Question**: Prompts the user for approval with an **interactive human-in-the-loop step** where the user can approve or reject the changes.
 5.  **📧 Agent-Upgrade-Notification**: Sends an email notification via Logic App based on user response.
+
+> 💡 **Note**: This workflow includes an interactive component that pauses execution and asks the user a question, requiring human approval before proceeding with notifications.
 
 ## ✅ Prerequisites
 
