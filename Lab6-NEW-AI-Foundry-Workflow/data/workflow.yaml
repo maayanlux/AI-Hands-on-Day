@@ -1,0 +1,80 @@
+kind: workflow
+trigger:
+  kind: OnConversationStart
+  id: trigger_wf
+  actions:
+    - kind: InvokeAzureAgent
+      id: agent1
+      agent:
+        name: Agent-K8s-Release-Checker
+      description: First agent in sequential workflow
+      conversationId: =System.ConversationId
+      input:
+        messages: =System.LastMessage
+      output:
+        messages: Local.LatestMessage
+        autoSend: true
+    - kind: InvokeAzureAgent
+      id: agent2
+      agent:
+        name: Agent-K8s-Change-Summarizer
+      conversationId: =System.ConversationId
+      description: Second agent in sequential workflow
+      input:
+        messages: =Local.LatestMessage
+      output:
+        text: Local.ChangeSummary
+        autoSend: true
+    - kind: InvokeAzureAgent
+      id: action-1768761691925
+      agent:
+        name: Agent-Edit-Yaml
+      conversationId: =System.ConversationId
+      input:
+        messages: '="The new release is: " & Local.ChangeSummary & ". Extract k8s.zip and update the yaml."'
+      output:
+        autoSend: true
+        messages: Local.LatestMessage
+    - kind: Question
+      variable: Local.UserResponse
+      id: action-1768373737442
+      entity: StringPrebuiltEntity
+      skipQuestionMode: SkipOnFirstExecutionIfVariableHasValue
+      prompt: I have updated the YAML to the new version. Please review the code below. Reply 'Approve' to proceed or 'Reject' to cancel.
+    - kind: ConditionGroup
+      conditions:
+        - condition: =Lower(Local.UserResponse) = "approve"
+          actions:
+            - kind: InvokeAzureAgent
+              id: action-1768373985745
+              agent:
+                name: Agent-Upgrade-Notification
+              input:
+                messages: '="Please send an email that includes BOTH the Release Summary and the full updated YAML code: " & Local.ChangeSummary'
+              output:
+                autoSend: true
+                messages: Local.LatestMessage
+              conversationId: =System.ConversationId
+          id: if-action-1768373825730-0
+      id: action-1768373825730
+      elseActions:
+        - kind: InvokeAzureAgent
+          id: action-1768376081875
+          agent:
+            name: Agent-Upgrade-Notification
+          input:
+            messages: '="Trigger the email now for version update. Release Summary: " & Local.ChangeSummary'
+          output:
+            autoSend: true
+            messages: Local.LatestMessage
+          conversationId: =System.ConversationId
+    - kind: EndConversation
+      id: action-1768376122841
+id: ""
+name: Workflow-K8S-Update
+description: ""
+
+# Sticky Notes
+# STICKY_NOTE: {"id":"sticky_1761166535807_awv9le4bg","text":"Create and connect a /Marketing-Analyst/ agent with following instructions:\n\nYou are a marketing analyst. Given a product description, identify: \nKey features\nTarget audience\nUnique selling points","width":305,"height":260,"x":"118.53985056039915","y":"-273.14943960149435"}
+# STICKY_NOTE: {"id":"sticky_1761166557820_yn7ggfd41","text":"Create and connect a /Marketing-Copywriter/ agent with following instructions:\n\nYou are a marketing copywriter. Given a block of text describing features, audience, and USPs, compose a compelling marketing copy (like a newsletter section) that highlights these points. Output should be short (around 150 words), output just the copy as a single text block.","width":312,"height":287,"x":"452.8947696139478","y":"-300.8293897882939"}
+# STICKY_NOTE: {"id":"sticky_1761166563177_yntzuqr31","text":"Create and connect a /Marketing-Editor/ agent with following instructions:\n\nYou are an editor. Given the draft copy, correct grammar, improve clarity, ensure consistent tone, give format and make it polished. Output the final improved copy as a single text block.","width":331,"height":227,"x":"787.7621419676211","y":"-244.8393524283935"}
