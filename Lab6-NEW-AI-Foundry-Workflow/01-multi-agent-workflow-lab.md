@@ -35,22 +35,21 @@ Before starting this lab, ensure you have completed the following:
 3.  Go to **Designer** -> **Code View**.
 4.  Replace the content with the JSON found in `data/send-email.json`.
 5.  **Save** the workflow.
-6.  Go to the **Designer** view. You may need to authorize the **Outlook** connection with your Microsoft account. If you don't have one, create one for free at [https://account.microsoft.com/account](https://account.microsoft.com/account).
-7.  
-> ⚠️ **Important:**
-> Run the workflow once or go to the "Overview" to get the **HTTP POST URL**. You will need the **URL endpoint** and the **Signature (sig)** from it for the next step.
+6.  Go to the **Designer** view and click on **Connections**, you may need to authorize the **Outlook** connection with your Microsoft account. If you don't have one, create one for free at [https://account.microsoft.com/account](https://account.microsoft.com/account).
+7.  Go to the **Request** action to get the **HTTP URL**. You will need the **Signature (sig)** from it for the next step.
+
 
 ## 🤖 Step 3: Create the Multi-Agent Workflow
 
-1.  Log in to the **Foundry Portal** and switch to the "New Foundry" experience.
-2.  Navigate to **Build** -> **Agents**.
+1.  Log in to the **Foundry Portal** and switch to the **New Foundry** experience.
+2.  Navigate to **Build** and then **Agents**.
 3.  Create the agents as follows:
 
 ### 🔍 Agent 1: Checker
 *   **Description**: Queries the internet to identify the most recent stable release of Kubernetes.
 *   **Name**: `Agent-K8s-Release-Checker`
 *   **Model**: `gpt-4o`
-*   **Tools**: Connect your existing "Grounding with Bing Search" connection.
+*   **Tools**: Connect your existing **Grounding with Bing Search** connection.
 *   **Instructions**:
     ```text
     You are a technical data extractor. Your ONLY job is to find the latest stable Kubernetes release info.
@@ -93,7 +92,7 @@ Before starting this lab, ensure you have completed the following:
     ```
 
 ### ✏️ Agent 3: YAML Editor
-*   **Description**: Modifies infrastructure-as-code files to apply the new version and checks validity.
+*   **Description**: Modifies YAML file to apply the new version.
 *   **Name**: `Agent-Edit-Yaml`
 *   **Model**: `gpt-4o`
 *   **Tools**: Enable **Code Interpreter**.
@@ -174,6 +173,25 @@ Before starting this lab, ensure you have completed the following:
     Execute the upload immediately.
     ```
 
+## 📘 Workflow Variables Dictionary
+
+Before building the workflow, understand these key concepts:
+
+| Variable Type | Variable Name | Description |
+|--------------|---------------|-------------|
+| **System** | `System.ConversationId` | Built-in variable that maintains conversation context across agents |
+| **System** | `System.LastMessage` | The last message in the conversation (use as input) |
+| **Local** | `Local.LatestMessage` | Custom variable to store agent output **messages** (object type) |
+| **Local** | `Local.ChangeSummary` | Custom variable to store **text** output (string type) |
+| **Local** | `Local.UserResponse` | Stores the user's approval/rejection response |
+
+### ⚠️ Important Notes
+- **Input vs Message**: Use `message` when passing data between agents
+- **YAML View Required**: Some configurations (like saving output as `text:` instead of `message`) are NOT supported in the visual designer and MUST be configured in YAML view
+- **Conversation Context**: Always add `System.ConversationId` to maintain context across agents
+
+---
+
 ## 🔄 Step 4: Orchestrate the Workflow
 
 1.  Navigate to **Workflows** in the Foundry portal.
@@ -185,30 +203,86 @@ Before starting this lab, ensure you have completed the following:
     Start --> A[Agent-K8s-Release-Checker]
     A --> B[Agent-K8s-Change-Summarizer]
     B --> C[Agent-Edit-Yaml]
-    C --> D[Set Variable]
-    D --> E[Ask a Question]
+    C --> E[Ask a Question]
     E --> F{If/Else Condition}
     F -- Approve --> G[Agent-Upgrade-Notification]
-    G --> H[Set Variable]
-    H --> I[Agent-K8s-YAML-Saver]
+    G --> I[Agent-K8s-YAML-Saver]
     I --> End
     F -- Reject --> J[Agent-Upgrade-Notification]
-    J --> K[End]
+    J --> End
     ```
 
-    *   **Start** connects to **Release Checker**.
-    *   **Release Checker** passes JSON to **Summarizer**.
-    *   **Summarizer** passes summary to **Edit Yaml**.
-    *   **Edit Yaml** generates new content.
-    *   **Ask a Question**: Prompt user to approve the change.
-    *   **If/Else condition**: Check if response contains "approve".
-    *   **If True**:
-        *   Send Notification.
-        *   Save YAML to Storage.
-    *   **If False**:
-        *   Send Notification only.
+### Step-by-Step Workflow Configuration
+
+#### 🔹 Step 1: Agent-K8s-Release-Checker
+*   **Action**: Add Agent
+*   **Agent**: Select `Agent-K8s-Release-Checker`
+*   **Configuration**:
+    *   **Conversation context**: Add `System.ConversationId`
+    *   **Input message**: `System.LastMessage`
+    *   **Save agent output as**: `Local.LatestMessage`
+
+#### 🔹 Step 2: Agent-K8s-Change-Summarizer
+*   **Action**: Add Agent
+*   **Agent**: Select `Agent-K8s-Change-Summarizer`
+*   **Configuration**:
+    *   **Conversation context**: Add `System.ConversationId`
+    *   **Input message**: `Local.LatestMessage`
+    *   **Save agent output as**: `Local.ChangeSummary`
+    *   ⚠️ **YAML View Required**: Switch to YAML view and change the output from `message: Local.ChangeSummary` to `text: Local.ChangeSummary` (we need text, not a message object)
+
+#### 🔹 Step 3: Agent-Edit-Yaml
+*   **Action**: Add Agent
+*   **Agent**: Select `Agent-Edit-Yaml`
+*   **Configuration**:
+    *   **Conversation context**: Add `System.ConversationId`
+    *   **Input message**: `"The new release is: " & Local.ChangeSummary & ". Extract k8s.zip and update the yaml."`
+    *   **Save agent output as**: `Local.LatestMessage`
+
+#### 🔹 Step 4: Ask a Question
+*   **Action**: Add "Ask a Question"
+*   **Configuration**:
+    *   **Question text**: `"I have updated the YAML to the new version. Please review the code below. Reply 'Approve' to proceed or 'Reject' to cancel."`
+    *   **Expected input type**: String
+    *   **Save user response as**: `Local.UserResponse`
+
+#### 🔹 Step 5: If/Else Condition
+*   **Action**: Add "If/Else" condition
+*   **Configuration**:
+    *   **Condition**: `Lower(Local.UserResponse) = "approve"`
+
+##### ✅ **If Branch (Approve)**
+
+**5a. Agent-Upgrade-Notification (Approve)**
+*   **Action**: Add Agent
+*   **Agent**: Select `Agent-Upgrade-Notification`
+*   **Configuration**:
+    *   **Conversation context**: Add `System.ConversationId`
+    *   **Input message**: `"Trigger the email now for version update. Release Summary: " & Local.ChangeSummary`
+    *   **Save agent output as**: `Local.LatestMessage`
+
+**5b. Agent-K8s-YAML-Saver**
+*   **Action**: Add Agent
+*   **Agent**: Select `Agent-K8s-YAML-Saver`
+*   **Configuration**:
+    *   **Conversation context**: Add `System.ConversationId`
+    *   **Input message**: Use `Local.LatestMessage` (contains the YAML content)
+    *   **Save agent output as**: `Local.LatestMessage`
+
+##### ❌ **Else Branch (Reject)**
+
+**5c. Agent-Upgrade-Notification (Reject)**
+*   **Action**: Add Agent
+*   **Agent**: Select `Agent-Upgrade-Notification`
+*   **Configuration**:
+    *   **Conversation context**: Add `System.ConversationId`
+    *   **Input message**: `"User rejected the upgrade. Release Summary: " & Local.ChangeSummary`
+    *   **Save agent output as**: `Local.LatestMessage`
+
+---
 
 4.  **Save** and **Run** the workflow.
+5.  When prompted with the approval question, respond with either "Approve" or "Reject" to test both branches.
 
 ---
 
@@ -216,12 +290,12 @@ Before starting this lab, ensure you have completed the following:
 
 Congratulations! 🎉 You have successfully:
 
-1. ✅ Created a Logic App email workflow with OpenAPI schema
-2. ✅ Built 5 specialized AI agents for Kubernetes release monitoring
-3. ✅ Configured Bing Search integration for version detection
-4. ✅ Implemented Code Interpreter for YAML manipulation
-5. ✅ Connected custom tools via OpenAPI to trigger Logic Apps
-6. ✅ Orchestrated a multi-step workflow with conditional logic
+1. ✅ Created an orchestrated multi-agent workflow in Azure AI Foundry
+2. ✅ Implemented conditional logic with approval gates
+3. ✅ Created a Logic App email workflow with OpenAPI schema
+4. ✅ Built 5 specialized AI agents for Kubernetes release monitoring
+5. ✅ Configured Bing Search integration for version detection
+6. ✅ Implemented Code Interpreter for YAML manipulation
 7. ✅ Integrated Azure Blob Storage for artifact management
 
 ---
@@ -239,31 +313,10 @@ Congratulations! 🎉 You have successfully:
 
 ---
 
-## Real-World Applications
-
-This lab demonstrates patterns applicable to:
-
-- 🔄 **DevOps Automation**: Monitoring infrastructure updates and triggering deployments
-- 📊 **Compliance Auditing**: Tracking version changes and generating reports
-- 🔔 **Alert Systems**: Notifying teams about critical updates with contextual information
-- 📝 **Documentation Generation**: Automatically updating configuration files
-- 🔐 **Security Patching**: Identifying and applying security updates across environments
-
----
-
-## Next Steps
-
-- Add a **Sentiment Analysis Agent** to assess the impact of breaking changes
-- Implement **Azure DevOps Pipeline Integration** to auto-deploy approved changes
-- Create a **Rollback Agent** that can revert changes if issues are detected
-- Build a **Monitoring Dashboard** using Power BI to track K8s version history
-- Explore **Azure Functions** as an alternative to Logic Apps for lightweight automation
-
----
-
 ## Additional Resources
 
 - [Azure AI Foundry Multi-Agent Patterns](https://learn.microsoft.com/en-us/training/modules/develop-multi-agent-azure-ai-foundry/)
+- [Azure AI Foundry Workflows Documentation](https://learn.microsoft.com/en-us/azure/ai-studio/how-to/flow-develop)
 - [OpenAPI Specification for Custom Tools](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/function-calling)
 - [Azure Logic Apps Integration](https://learn.microsoft.com/en-us/azure/logic-apps/)
 - [Code Interpreter Best Practices](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/code-interpreter)
