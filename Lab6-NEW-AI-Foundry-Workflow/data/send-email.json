@@ -1,0 +1,77 @@
+{
+    "definition": {
+        "$schema": "https://schema.management.azure.com/schemas/2016-06-01/workflowdefinition.json#",
+        "contentVersion": "1.0.0",
+        "actions": {
+            "SendEmailV2": {
+                "type": "ApiConnection",
+                "inputs": {
+                    "host": {
+                        "connection": {
+                            "referenceName": "outlook"
+                        }
+                    },
+                    "method": "post",
+                    "body": {
+                        "To": "@triggerBody()['To']",
+                        "Subject": "@triggerBody()['Subject']",
+                        "Body": "@triggerBody()['Body']"
+                    },
+                    "path": "/v2/Mail"
+                },
+                "runAfter": {}
+            },
+            "Response": {
+                "type": "Response",
+                "inputs": {
+                    "statusCode": 200,
+                    "body": "@body('SendEmailV2')"
+                },
+                "runAfter": {
+                    "SendEmailV2": [
+                        "Succeeded",
+                        "Failed",
+                        "TimedOut"
+                    ]
+                }
+            }
+        },
+        "triggers": {
+            "Request": {
+                "type": "Request",
+                "description": "This operation sends an email message.",
+                "kind": "Http",
+                "inputs": {
+                    "schema": {
+                        "type": "object",
+                        "required": [
+                            "To",
+                            "Subject",
+                            "Body"
+                        ],
+                        "properties": {
+                            "To": {
+                                "format": "email",
+                                "description": "Specify email addresses separated by semicolons like someone@contoso.com",
+                                "type": "string",
+                                "title": "To"
+                            },
+                            "Subject": {
+                                "description": "Specify the subject of the mail",
+                                "type": "string",
+                                "title": "Subject"
+                            },
+                            "Body": {
+                                "format": "html",
+                                "description": "Specify the body of the mail",
+                                "type": "string",
+                                "title": "Body"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "kind": "Stateful"
+}
