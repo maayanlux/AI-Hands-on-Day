@@ -155,7 +155,7 @@ Now create the Logic App workflow that will call your AI agent.
 10. **Modify the connection** with your own project endpoint at line **107** 
 > 💡Replace ONLY the connection name "**Your-Project-Connection**/threads/@{variables('thread_id')}/runs/@{body('Create_Run')?['id']}?api-version=2025-05-01"
 11. **Update the Agent ID** in the workflow at line **16**
-12. Make sure the referenceName is: **azureagentservice**
+12. Make sure the referenceName is: **azureagentservice** at line **173**
 13. Click **Save**
 
 #### Key Configuration Points:
