@@ -29,3 +29,6 @@ Thumbs.db
 
 # PowerShell scripts with sensitive data
 agent.ps1
+
+# Workshop materials
+Workshop-Brochure.md
