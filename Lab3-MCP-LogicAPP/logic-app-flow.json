@@ -170,7 +170,7 @@
                 "inputs": {
                     "host": {
                         "connection": {
-                            "referenceName": "azureagentservice-1"
+                            "referenceName": "azureagentservice"
                         }
                     },
                     "method": "post",
