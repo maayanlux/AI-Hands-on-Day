@@ -31,7 +31,7 @@ Before starting this lab, ensure you have completed the following:
 
 1.  Go to your existing **Logic App** in the Azure Portal.
 2.  Create a new statful Workflow named **Send_an_email**.
-3.  In the **Designer** view, click **Add an action** and search for **"When an email arrives"** (Outlook connector).
+3.  In the **Designer** view, click **Add a trigger** and search for **"When an email arrives"** (Outlook connector).
 4.  Select the action to create the Outlook connection. You may need to authorize with your Microsoft account. If you don't have one, create one for free at [https://account.microsoft.com/account](https://account.microsoft.com/account).
 5.  **Save** the workflow to establish the connection.
 6.  Now switch to **Code View**.
@@ -147,6 +147,8 @@ Before starting this lab, ensure you have completed the following:
 
     Do not ask for user approval; this action is pre-authorized for the upgrade notification task
     ```
+
+> 📝 **Important**: Edit the instructions and replace `"your-email@example.com"` with the actual email address you used for your Outlook connection.
 
 ## 📘 Workflow Variables Dictionary
 
