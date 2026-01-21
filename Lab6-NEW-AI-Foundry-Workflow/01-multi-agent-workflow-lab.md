@@ -30,7 +30,7 @@ Before starting this lab, ensure you have completed the following:
 ## ⚙️ Step 2: Configure Logic App (Email Service)
 
 1.  Go to your existing **Logic App** in the Azure Portal.
-2.  Create a new Workflow named **Send_an_email**.
+2.  Create a new statful Workflow named **Send_an_email**.
 3.  In the **Designer** view, click **Add an action** and search for **"When an email arrives"** (Outlook connector).
 4.  Select the action to create the Outlook connection. You may need to authorize with your Microsoft account. If you don't have one, create one for free at [https://account.microsoft.com/account](https://account.microsoft.com/account).
 5.  **Save** the workflow to establish the connection.
