@@ -31,11 +31,14 @@ Before starting this lab, ensure you have completed the following:
 
 1.  Go to your existing **Logic App** in the Azure Portal.
 2.  Create a new Workflow named **Send_an_email**.
-3.  Go to **Designer** -> **Code View**.
-4.  Replace the content with the JSON found in `data/send-email.json`.
-5.  **Save** the workflow.
-6.  Go to the **Designer** view and click on **Connections**, you may need to authorize the **Outlook** connection with your Microsoft account. If you don't have one, create one for free at [https://account.microsoft.com/account](https://account.microsoft.com/account).
-7.  Go to the **Request** action to get the **HTTP URL**. You will need the **Signature (sig)** from it for the next step.
+3.  In the **Designer** view, click **Add an action** and search for **"When an email arrives"** (Outlook connector).
+4.  Select the action to create the Outlook connection. You may need to authorize with your Microsoft account. If you don't have one, create one for free at [https://account.microsoft.com/account](https://account.microsoft.com/account).
+5.  **Save** the workflow to establish the connection.
+6.  Now switch to **Code View**.
+7.  Replace the entire content with the JSON found in `data/send-email.json`.
+8.  **Save** the workflow.
+9.  Go back to the **Designer** view and verify the **Connections** are still authorized.
+10. Go to the **Request** action to get the **HTTP URL**. You will need the **Signature (sig)** from it for the next step.
 
 
 ## 🤖 Step 3: Create the Multi-Agent Workflow
