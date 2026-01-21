@@ -1,4 +1,4 @@
-# Lab 6: Building a Multi-Agent K8s Release Monitor
+# Lab 6: Building a Foundry Workflow Multi-Agent K8s Release Monitor
 
 In this lab, you will orchestrate specialized AI agents to automate the monitoring of Kubernetes releases.
 

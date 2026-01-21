@@ -112,7 +112,7 @@ Build progressively more capable AI agents:
 
 ---
 
-### Lab 6: Multi-Agent Workflow Automation
+### Lab 6: Foundry Workflow Multi-Agent K8s Release
 
 | Topic | Description |
 |-------|-------------|
