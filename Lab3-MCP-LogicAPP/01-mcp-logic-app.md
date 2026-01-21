@@ -177,6 +177,8 @@ https://learn.microsoft.com/en-us/azure/logic-apps/set-up-model-context-protocol
 
 **ONLY** the - **Set up Easy Auth for your MCP server** and **Create an app registration** parts!
 
+> ⚠️ **Important**: Follow only these two sections from the documentation!
+
 ### Step 7: Get the MCP Endpoint URL
 
 Now retrieve the MCP endpoint URL to connect it to VS Code.
