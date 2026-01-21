@@ -149,7 +149,11 @@ Now create the Logic App workflow that will call your AI agent.
 5. Click **Create**
 6. Create first action:  **When an HTTP request is received**
 7. Create second action: **Create Thread**
-> 💡 This will create the Foundry Connection: make sure the connection name is: **azureagentservice**
+> 💡 This will create the Foundry Connection:
+Connection name: **azureagentservice**
+Authentication type: **Logic Apps Managed Identity**
+Azure AI Project Endpoint: **past your Project Endpoint URL**
+
 8. Open the workflow and click **Code View**
 9. Replace the content with the workflow JSON from `logic-app-flow.json`
 10. **Modify the connection** with your own project endpoint at line **107** 
