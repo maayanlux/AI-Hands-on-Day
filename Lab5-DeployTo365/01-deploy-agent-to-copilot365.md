@@ -37,13 +37,17 @@ Deploy your **Ticket Triage Orchestrator Agent** (from Lab 2.6) as a custom agen
 
 1. Click the **Microsoft 365 Agents Toolkit** icon in the VS Code sidebar
 2. Select **Create a new agent/app**
-3. Choose **Custom Engine Agent** and **Basic template** for building custom engine agents with **Azure OpenAI** and **JavaScript**
+3. Choose **Custom Engine Agent** and **Basic template** for building custom engine agents with **Azure OpenAI**
 4. Configure:
 
 | Setting | Value |
 |---------|-------|
+| **Azure OpenAI service key** | Enter your Azure OpenAI service key |
+| **Azure OpenAI service endpoint** | Enter your Azure OpenAI service endpoint |
+| **Azure OpenAI deployment name** | Enter 'gpt-4o'|
+| **Type** | Enter 'JavaScript'|
 | **Folder** | Select a local folder for your project |
-| **Agent Name** | `Ticket-Triage-Agent` |
+| **Application Name** | `Ticket-Triage-Agent` |
 
 5. Wait for the toolkit to scaffold the project
 
@@ -67,33 +71,36 @@ Deploy your **Ticket Triage Orchestrator Agent** (from Lab 2.6) as a custom agen
 4. Use this prompt:
 
 ```
-Update the agent in this project to integrate with my Azure AI Foundry agent. 
-Here's the agent code from Foundry:
+Integrate this project with my Azure AI Foundry agent using the following Python code:
 
 [PASTE YOUR AGENT CODE HERE]
 
-The agent is a ticket triage orchestrator that:
-- Assesses priority (High/Medium/Low)
-- Assigns team (Frontend/Backend/Infrastructure/Marketing)
-- Estimates effort (Small/Medium/Large)
+Requirements:
+
+1. Install packages: @azure/ai-agents, @azure/identity, @azure/core-util
+2. Replace the OpenAI client in agent.js with AgentsClient from @azure/ai-agents
+3. Use this EXACT syntax for the client (endpoint first, credential second):
+const agentsClient = new AgentsClient(
+  config.projectEndpoint,
+  new DefaultAzureCredential()
+);
+
+4. Update config.js to add projectEndpoint and agentId with validation
+5. MUST UPDATE .localConfigs file AND .localConfigs.playground filewith these variables:
+AZURE_AI_PROJECT_ENDPOINT=<your-endpoint-from-python-code>
+AZURE_AI_AGENT_ID=<your-agent-id-from-python-code>
+
+6. Implement: thread management per conversation, message creation, run polling, error handling
+7. The Azure AI Agents SDK methods are called directly on the client object (e.g., agentsClient.createThread()) rather than being nested under a .agents property (e.g., agentsClient.agents.createThread())
+8. Important: The Azure AI Agents SDK uses operation groups (like threads, messages, runs) as properties on the client, updated the code to use the correct Azure AI Agents SDK API
 ```
 
 5. Review and apply the suggested changes
 
 ---
 
-## Step 5: Update Configuration
 
-Create a `.env` file in the folder:
-```dotenv
-AZURE_OPENAI_ENDPOINT=https://YOUR-RESOURCE.openai.azure.com/
-AZURE_OPENAI_API_KEY=your-api-key
-MODEL_DEPLOYMENT_NAME=gpt-4o
-```
-
----
-
-## Step 6: Test in Playground
+## Step 5: Test in Playground
 
 1. In the **Microsoft 365 Agents Toolkit** sidebar, find **Deployment**
 2. Click **Preview your app** → **Debug in Microsoft 365 agents playground**
@@ -142,7 +149,7 @@ The login button color doesn't match our brand guidelines
 
 ---
 
-## Step 7: Deploy to Microsoft 365
+## Step 6: Deploy to Microsoft 365
 
 Once testing is complete:
 
