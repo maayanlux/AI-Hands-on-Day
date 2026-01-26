@@ -173,9 +173,9 @@ Now create the Logic App workflow that will call your AI agent.
 ### Step 6: Create an app registration
 
 To create an app registration for your logic app to use in your Easy Auth setup, follow these steps:
-https://learn.microsoft.com/en-us/azure/logic-apps/set-up-model-context-protocol-server-standard#create-an-app-registration 
+https://learn.microsoft.com/en-us/azure/logic-apps/set-up-model-context-protocol-server-standard#create-an-app-registration
 
-**ONLY** the - **Set up Easy Auth for your MCP server** and **Create an app registration** parts!
+**ONLY** the - **Create an app registration** and the **Set up Easy Auth for your MCP server** parts!
 
 > ⚠️ **Important**: Follow only these two sections from the documentation!
 
