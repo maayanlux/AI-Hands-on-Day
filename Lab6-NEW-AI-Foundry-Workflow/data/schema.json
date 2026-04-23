@@ -2,16 +2,19 @@
   "openapi": "3.0.0",
   "info": {
     "title": "K8s Email Tool",
+    "description": "Send emails via Logic App",
     "version": "1.0.0"
   },
   "servers": [
     {
-      "url": "https://LOGIC-APP-NAME.azurewebsites.net:443"
+      "url": "https://LOGICAPP-NAME.azurewebsites.net:443"
     }
   ],
   "paths": {
-    "/api/Send_an_email/triggers/Request/invoke": {
+    "/api/Send_an_email_V2/triggers/Request/invoke": {
       "post": {
+        "summary": "Send an email",
+        "description": "Sends an email to the specified recipient with a subject and body",
         "operationId": "sendEmail",
         "parameters": [
           {
@@ -47,28 +50,48 @@
             "required": true,
             "schema": {
               "type": "string",
-              "default": "LOGICAPP-SIGNATURE"
+              "default": "YOUR-SIGNATURE-HERE"
             }
           }
         ],
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
+                "required": [
+                  "To",
+                  "Subject",
+                  "Body"
+                ],
                 "properties": {
                   "To": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Email address of the recipient"
                   },
                   "Subject": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Subject line of the email"
                   },
                   "Body": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Body content of the email"
                   }
                 }
               }
             }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Email sent successfully"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
         }
       }
