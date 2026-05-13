@@ -78,18 +78,9 @@ This lab covers the setup and configuration of the Microsoft Foundry infrastruct
 5. Search for `gpt-4o`
 6. Select the **gpt-4o** card
 7. Click **Deploy** → **Deploy to project**
-8. Configure the deployment:
-
-| Setting | Value |
-|---------|-------|
-| **Deployment name** | `gpt-4o` (or keep default) |
-| **Model version** | Select the latest available version (e.g., `2024-05-13`) |
-| **Deployment type** | Standard |
-| **Tokens per Minute Rate Limit (thousands)** | Adjust as needed (e.g., `10k`) |
-
-9. Click **Deploy**
-10. Once deployed, you will be redirected to the deployment details page
-11. 📝 **Note the Target URI and Key** for future labs
+8. Use the default settings
+9. Once deployed, you will be redirected to the deployment details page
+10. 📝 **Note the Target URI and Key** for future labs
 
 ---
 
