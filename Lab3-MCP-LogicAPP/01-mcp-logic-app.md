@@ -273,6 +273,50 @@ Search for strength training products under $100
 
 ---
 
+## Resolve Problem
+
+### MCP Authentication Issue in VS Code
+
+If you encounter an authentication problem with the MCP server in VS Code, follow these steps:
+
+#### 1. Sign in with Service Principal
+
+Run the following command in your terminal:
+
+```powershell
+az login --service-principal -u <clientId> -p <clientSecret> --tenant <tenantId> --allow-no-subscriptions
+```
+
+> 💡 Replace `<clientId>`, `<clientSecret>`, and `<tenantId>` with the values from your App Registration
+
+#### 2. Get an Access Token
+
+Retrieve an access token scoped to your MCP server's App Registration:
+
+```powershell
+az account get-access-token `
+  --scope "api://xxxxxxxxxxxxxxxxxxxxxx/.default" `
+  --query accessToken -o tsv
+```
+
+> 💡 Replace `xxxxxxxxxxxxxxxxxxxxxx` with your App Registration's **Application (client) ID**.
+
+#### 3. Update the MCP Configuration
+
+Open your `mcp.json` file in VS Code and add a `headers` block with your API key:
+
+```json
+"headers": {
+    "x-appi-key": "YOUR-API-KEY"
+}
+```
+
+> 💡 Replace `YOUR-API-KEY` with the access token returned by the previous command.
+
+After saving, **restart the MCP server** in VS Code for the changes to take effect.
+
+---
+
 ## Summary
 
 Congratulations! 🎉 You have successfully:
