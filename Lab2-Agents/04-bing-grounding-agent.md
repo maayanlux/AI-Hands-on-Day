@@ -31,23 +31,38 @@ Before starting this lab, ensure you have completed the following:
 
 ## Lab Instructions
 
-### Step 1: Create a Bing Grounding Connection
+### Step 1: Create a Bing Resource
 
-Before creating the agent, you need to set up a Bing Search connection:
+Before connecting Bing to your agent, provision a Bing resource in the Azure portal:
+
+1. In the [Azure portal](https://portal.azure.com), search for **Bing Resource** and click **Add → Grounding with Bing Search**
+2. Select your **Subscription** and **Resource Group**
+3. Assign it a **Name**
+4. Select the **default pricing tier**
+5. Mark the **Terms** option
+6. Click **Review + Create**, then **Create**
+
+> 💡 This resource will be referenced when you create the Bing connection in AI Foundry.
+
+---
+
+### Step 2: Create a Bing Grounding Connection
+
+Now set up a Bing Search connection in AI Foundry:
 
 1. Navigate to [Azure AI Foundry](https://ai.azure.com)
 2. Click on **Management Center**
 3. Under your project, click on **Connected Resources**
 4. Click **New Connection**
 5. Choose **Grounding with Bing Search**
-6. Create new **Grounding with Bing resource**
+6. Select the **Bing resource** you created in Step 1
 7. Click **Add Connection**
 
 > 💡 This connection will be available when configuring your agent's knowledge sources.
 
 ---
 
-### Step 2: Navigate to Agents
+### Step 3: Navigate to Agents
 
 1. Go to [Azure AI Foundry](https://ai.azure.com)
 2. Select your **Project**
@@ -56,7 +71,7 @@ Before creating the agent, you need to set up a Bing Search connection:
 
 ---
 
-### Step 3: Create the Bing Grounding Agent
+### Step 4: Create the Bing Grounding Agent
 
 Configure your agent with the following settings:
 
@@ -83,7 +98,7 @@ Always:
 
 ---
 
-### Step 4: Add Bing Grounding to the Agent
+### Step 5: Add Bing Grounding to the Agent
 
 This is the key step that enables your agent to search the web!
 
@@ -106,7 +121,7 @@ This is the key step that enables your agent to search the web!
 
 ---
 
-### Step 5: Test Your Agent in the Playground
+### Step 6: Test Your Agent in the Playground
 
 1. After creating the agent, click **Try in Playground**
 2. Ensure `Agent-health-bing` is selected
